@@ -41,3 +41,7 @@ sed -i 's/WLAN_5G_GSSID	BOARD_PID "_GUEST_5G_%s"/WLAN_5G_GSSID	"'$wifi_guest_5g_
 
 echo "更新版本号时间"
 sed -i "s/FIRMWARE_BUILDS_REV=.*/FIRMWARE_BUILDS_REV=$version_time/g" ./versions.inc
+
+echo "超频到 1100MHz "
+sed -i '/CONFIG_FIRMWARE_CPU_1100MHZ/d' $config
+echo "CONFIG_FIRMWARE_CPU_1100MHZ=y" >> $config
