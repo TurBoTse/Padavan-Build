@@ -1,0 +1,143 @@
+#修改 targets: 中的 "PSG1218" 为你需要编译的型号，注意名称要与configs/templates/目录下的名字相同
+# by: TurBoTse
+
+name: Hanwckf_Padavan_CI
+
+on: 
+#  release:
+#    types: [published]
+#  push:                                                        # 推送操作
+#    tags:
+#      - 'v*'
+#    branches:                                                  # 分支
+#      - main                                                   # 主分支
+  workflow_dispatch:
+#  schedule:                                                    # 自动编译时间表
+#    - cron: 0 19 * * *                                         # 每天国际时间19点，北京时间凌晨3点执行(北京+8)
+  watch:                                                        # 监视操作
+    types: [started]                                            # 点击 Star 之后
+env:
+  images_dir: /opt/images                                       # 固件目录
+  build_dir: /opt/rt-n56u                                       # 源码目录
+  work_dir: /opt/rt-n56u/trunk                                  # 工作目录
+  custom_modify: true                                           # 修改文件
+  upload_cowtransfer: true                                      # 上传到奶牛快传
+  upload_wetransfer: true                                       # 上传到 WeTransfer
+  src_git: https://github.com/hanwckf/rt-n56u.git               # 源码地址
+  config_dir: /opt/rt-n56u/trunk/configs/templates              # 设备模板目录
+  toolchain_dir: /opt/rt-n56u/toolchain-mipsel/toolchain-3.4.x  # 工具链目录
+  toolchain_pkg: mipsel-linux-uclibc.tar.xz
+  toolchain_url: https://github.com/TurBoTse/padavan-toolchain/releases/download/v1.0
+  ENABLED_CFG: |
+    CONFIG_FIRMWARE_INCLUDE_LANG_CN
+    CONFIG_FIRMWARE_ENABLE_IPV6
+  DISABLED_CFG: |
+    CONFIG_FIRMWARE_INCLUDE_LANG_UK
+    CONFIG_FIRMWARE_INCLUDE_TCPDUMP
+    CONFIG_FIRMWARE_INCLUDE_SCUTCLIENT
+    CONFIG_FIRMWARE_INCLUDE_GDUT_DRCOM
+    CONFIG_FIRMWARE_INCLUDE_DOGCOM
+    CONFIG_FIRMWARE_INCLUDE_MINIEAP
+    CONFIG_FIRMWARE_INCLUDE_NJIT_CLIENT
+    CONFIG_FIRMWARE_INCLUDE_NAPT66
+    CONFIG_FIRMWARE_INCLUDE_VLMCSD
+    CONFIG_FIRMWARE_INCLUDE_TTYD
+    CONFIG_FIRMWARE_INCLUDE_HTOP
+    CONFIG_FIRMWARE_INCLUDE_NANO
+    CONFIG_FIRMWARE_INCLUDE_MENTOHUST
+    CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS
+    CONFIG_FIRMWARE_INCLUDE_SSSERVER
+    CONFIG_FIRMWARE_INCLUDE_SOFTETHERVPN_SERVER
+    CONFIG_FIRMWARE_INCLUDE_SOFTETHERVPN_CLIENT
+    CONFIG_FIRMWARE_INCLUDE_SOFTETHERVPN_CMD
+    CONFIG_FIRMWARE_INCLUDE_DNSFORWARDER
+    CONFIG_FIRMWARE_INCLUDE_FRPC
+    CONFIG_FIRMWARE_INCLUDE_FRPS
+    CONFIG_FIRMWARE_INCLUDE_TUNSAFE
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-20.04
+    if: github.event.repository.owner.id == github.event.sender.id  # 自己点的 Star
+    env:
+      build_variant: ${{ matrix.build_variant }}
+      targets: ${{ matrix.targets }}
+    strategy:
+      matrix:
+        include:
+          - build_variant: "mt7620"
+            targets: "PSG1208 PSG1218 NEWIFI-MINI MI-MINI MI-3 OYE-001 5K-W20"
+          - build_variant: "mt7621"
+            targets: "K2P-5.0 DIR-878-5.0 RM2100 R2100"
+          - build_variant: "mt7621-usb-1"
+            targets: "A3004NS MSG1500 WR1200JS E8820V2 NEWIFI3 RT-AC1200GU"
+          - build_variant: "mt7621-usb-2"
+            targets: "JCG-836PRO-5.0 JCG-AC860M-5.0 JCG-Y2-5.0 DIR-882-5.0 MI-R3G B70"
+          - build_variant: "mt7628"
+            targets: "360P2 HC5861B HC5761A HC5661A MI-NANO MZ-R13 MZ-R13P"
+    steps:
+      - name: Checkout main            # 导入主分支
+        uses: actions/checkout@main
+      - name: Prepare environment      # 准备编译环境
+        run: |                         # 安装依赖包
+          sudo apt update
+          sudo apt install libtool-bin gperf python-docutils autopoint gettext
+          sudo timedatectl set-timezone 'Asia/Shanghai'  # 设置时区
+      - name: Clone source code
+        run: |                         # 克隆源码
+          git clone --depth=1 $src_git $build_dir
+      - name: Prepare toolchain
+        run: |                         # 下载预编译的构建工具链
+          # sh dl_toolchain.sh
+          mkdir -p $toolchain_dir && mkdir -p $images_dir
+          curl -LO ${toolchain_url}/${toolchain_pkg}
+          tar -xf $toolchain_pkg -C $toolchain_dir
+      - name: Modify configs
+        run: |                         # 修改配置文件
+          cd $config_dir
+          for m in $targets; do if [ -f $m.config ]; then \
+          for n in $ENABLED_CFG; do sed -i "/${n}/c${n}=y" $m.config; done; \
+          for n in $DISABLED_CFG; do sed -i "/${n}/c${n}=n" $m.config; done; \
+          fi; done
+      - name: Copy custom modify
+        if: env.custom_modify == 'true'
+        run: |                         # 拷贝文件并修改
+          for m in $targets; do if [ ! -f public/$m.sh ]; then echo "public/$m.sh 未找到"
+          else
+            if [ -f public/$m.sh ]; then cp -f public/$m.sh $work_dir; echo "$m.sh 拷贝成功"; fi; fi; done; \
+          for m in $targets; do  if [ ! -f public/$m.config ]; then echo "public/$m.config 未找到"
+          else
+            if [ -f public/$m.config ]; then cp -f public/$m.config $config_dir/$m.config; echo "$m.config 已修改"; fi; fi; done; \
+          if [ -f public/public.sh ]; then cp -f public/public.sh $work_dir; fi
+          if [ -d hanwckf/config ]; then cp -f hanwckf/config/* $work_dir; fi
+          if [ -d hanwckf/scripts ]; then cp -f hanwckf/scripts/* $work_dir; fi
+          if [ -d hanwckf/modify ]; then cp -rf hanwckf/modify/* $work_dir; fi
+          cd $work_dir
+          for m in $targets; do if [ -f $m.config ]; then echo "拷贝 $m.config"; cp -f ./$m.config $config_dir/$m.config; fi; done; \
+          for m in $targets; do if [ -f public.sh ]; then echo "执行 public.sh"; sh ./public.sh; fi; if [ -f $m.sh ]; then echo "执行 $m.sh"; sh ./$m.sh; fi; done; \
+      - name: Start build firmware
+        run: |                         # 执行构建固件
+          cd $work_dir
+          for m in $targets; do fakeroot ./build_firmware_ci $m; \
+          if [ $? = 0 ]; then mv -f images/*.trx $images_dir/Hanwckf_${m}_$(date +%Y%m%d).trx; else exit 1; fi; \
+          ./clear_tree_simple >/dev/null 2>&1; done
+      - name: Upload images to Artifact
+        if: ${{ success() }}
+        uses: actions/upload-artifact@main
+        with:
+          name: padavan_${{ env.build_variant }}
+          path: ${{ env.images_dir }}
+      - name: Upload images to CowTransfer
+        if: env.upload_cowtransfer == 'true' && success()
+        run: |                         # 上传到奶牛快传
+          curl -fsSL git.io/file-transfer | sh
+          ./transfer cow --block 2621440 -s -p 64 --no-progress ${images_dir} 2>&1 | tee cowtransfer.log
+          echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
+      - name: Upload images to WeTransfer
+        if: env.upload_wetransfer == 'true' && success()
+        run: |                         # 上传到 WeTransfer
+          curl -fsSL git.io/file-transfer | sh
+          ./transfer wet -s -p 16 --no-progress ${images_dir} 2>&1 | tee wetransfer.log
+          echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
