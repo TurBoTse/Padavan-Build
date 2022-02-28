@@ -31,11 +31,11 @@ jobs:
           - build_variant: "mt7620"
             targets: "PSG1208 PSG1218 NEWIFI-MINI MI-MINI MI-3 OYE-001 5K-W20"
           - build_variant: "mt7621"
-            targets: "K2P-5.0 DIR-878-5.0 RM2100 R2100"
+            targets: "K2P DIR-878 RM2100 R2100"
           - build_variant: "mt7621-usb-1"
             targets: "A3004NS MSG1500 WR1200JS E8820V2 NEWIFI3 RT-AC1200GU"
           - build_variant: "mt7621-usb-2"
-            targets: "JCG-836PRO-5.0 JCG-AC860M-5.0 JCG-Y2-5.0 DIR-882-5.0 MI-R3G B70"
+            targets: "JCG-836PRO JCG-AC860M JCG-Y2 DIR-882 MI-R3G B70"
           - build_variant: "mt7628"
             targets: "360P2 HC5861B HC5761A HC5661A MI-NANO MZ-R13 MZ-R13P"
     steps:
