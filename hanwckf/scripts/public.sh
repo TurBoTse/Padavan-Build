@@ -6,11 +6,11 @@
 
 user_name="admin"                                   # 用户名
 user_password="admin"                               # 登录密码
-lan_ip="192.168.2"                                  # LAN 地址 别写后面的 .1
-wlan_2g_ssid="Padavan"                              # 2G 无线名称
-wlan_5g_ssid="Padavan_5G"                           # 5G 无线名称
-wlan_guest_2g_ssid="Padavan_Guset"                  # 2G 访客无线名称
-wlan_guest_5g_ssid="Padavan_Guest_5G"               # 5G 访客无线名称
+lan_ip="192.168.123"                                  # LAN 地址 别写后面的 .1
+wlan_2g_ssid="Pp"                              # 2G 无线名称
+wlan_5g_ssid="PDCN_5G"                           # 5G 无线名称
+wlan_guest_2g_ssid="pd"                  # 2G 访客无线名称
+wlan_guest_5g_ssid="不要密码"               # 5G 访客无线名称
 wlan_2g_psk="1234567890"                            # 2G WIFI密码最少8位 空白为不设置
 wlan_5g_psk="1234567890"                            # 5G WIFI密码最少8位 空白为不设置
 version_time=$(date +%Y%m%d)                        # 更新时版本号时间: 20210101
