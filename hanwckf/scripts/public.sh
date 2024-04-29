@@ -4,15 +4,15 @@
 # 修改默认参数（不同设备拷贝到相应 *.sh)          by: TurBoTse
 #####################################################################
 
-user_name="admin"                                   # 用户名
-user_password="admin"                               # 登录密码
+user_name="ancore"                                   # 用户名
+user_password="qq84657851"                               # 登录密码
 lan_ip="192.168.2"                                  # LAN 地址 别写后面的 .1
-wlan_2g_ssid="Padavan"                              # 2G 无线名称
-wlan_5g_ssid="Padavan_5G"                           # 5G 无线名称
-wlan_guest_2g_ssid="Padavan_Guset"                  # 2G 访客无线名称
-wlan_guest_5g_ssid="Padavan_Guest_5G"               # 5G 访客无线名称
-wlan_2g_psk="1234567890"                            # 2G WIFI密码最少8位 空白为不设置
-wlan_5g_psk="1234567890"                            # 5G WIFI密码最少8位 空白为不设置
+wlan_2g_ssid="PHICOMM_PING"                              # 2G 无线名称
+wlan_5g_ssid="PHICOMM_PING_5G"                           # 5G 无线名称
+wlan_guest_2g_ssid="PHICOMM_PING_Guset"                  # 2G 访客无线名称
+wlan_guest_5g_ssid="PHICOMM_PING_Guest_5G"               # 5G 访客无线名称
+wlan_2g_psk="ping17671269850"                            # 2G WIFI密码最少8位 空白为不设置
+wlan_5g_psk="zhoujunyang0218"                            # 5G WIFI密码最少8位 空白为不设置
 version_time=$(date +%Y%m%d)                        # 更新时版本号时间: 20210101
 default_file="./user/shared/defaults.h"             # 默认配置文件
 
