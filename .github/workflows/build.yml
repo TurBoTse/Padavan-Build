@@ -20,10 +20,13 @@ on:
         - DIR-882
         - EA7500
         - G-AX1800
+        - G-AX1800-B
         - GHL
         - HAR-20S2U1
         - JCG-836PRO
         - JCG-AC860M
+        - JCG-Q10Pro
+        - JCG-Q10Pro-PB
         - JCG-Q11Pro
         - JCG-Q20
         - JCG-Q20-PB
@@ -31,6 +34,7 @@ on:
         - K2P
         - K2P-NANO
         - K2P-USB
+        - KOMI-A8
         - MI-4
         - MI-R3G
         - MI-R3P-PB
@@ -54,12 +58,14 @@ on:
         - SIM-AX1800T
         - TX1801
         - WDR8620
+        - WRL18M4GD
         - WE410443-TC
         - WIA3300-10
         - WR1200JS
         - XY-C1
         - ZTE-E8820S
         - ZTE-E8820V2
+        - ZTT-RX6000
         default: K2P
       toolchain:
         description: 'Select the compilation toolchain'
@@ -142,12 +148,15 @@ jobs:
           key: ${{ matrix.target }}-${{ matrix.toolchaingcc }}
       - uses: actions/setup-go@main
         with:
-          go-version: '1.22.3'
+          go-version: '1.23.5'
           check-latest: true
           cache: false
       - name: Prepare environment
         run: |
-          sudo apt-get update && sudo apt-get install -y libtool-bin gperf python3-docutils autopoint gettext ccache
+          sudo apt-get update && sudo apt-get install -y unzip libtool-bin ccache curl cmake gperf gawk flex bison nano xxd \
+            fakeroot kmod cpio bc zip git python3-docutils gettext automake autopoint \
+            texinfo build-essential help2man pkg-config zlib1g-dev libgmp3-dev \
+            libmpc-dev libmpfr-dev libncurses5-dev libltdl-dev wget libc-dev-bin liblzma-dev
           echo "TRUNK_DIR=${{ github.workspace }}/$FIRMWARE_REPO/trunk" >> $GITHUB_ENV
           echo "Compilation_time=$(TZ='Asia/Shanghai' date +%Y%m%d)" >> $GITHUB_ENV
       - name: Download sources and toolchain
@@ -232,7 +241,7 @@ jobs:
           path: ${{ env.TRUNK_DIR }}/firmwares/*.trx
       - uses: ncipollo/release-action@main
         with:
-          commit: ${{ github.sha }}
+          commit: main
           tag: ${{ env.Compilation_time }}
           artifacts: ${{ env.TRUNK_DIR }}/firmwares/*.trx
           allowUpdates: true
