@@ -31,6 +31,8 @@ on:
         - JCG-Q20
         - JCG-Q20-PB
         - JCG-Y2
+        - JDCLOUD-RE-CP-02
+        - JDCLOUD-RE-SP-01B
         - K2P
         - K2P-NANO
         - K2P-USB
@@ -51,8 +53,6 @@ on:
         - NEWIFI3
         - QM-B1
         - R2100
-        - RE-CP-02
-        - RE-SP-01B
         - RM2100
         - RT-AC85P
         - SIM-AX1800T
