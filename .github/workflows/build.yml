@@ -103,7 +103,7 @@ on:
         description: 'String JSON list of plug-ins'
         required: true
         type: string
-        default: '{"ss":"y","v2ray":"n","xray":"y","trojan":"y","ssobfs":"y","smartdns":"y","vlmcsd":"y","ttyd":"n","iperf3":"n"}'
+        default: '{"ss":"y","v2ray":"n","xray":"n","trojan":"n","ssobfs":"n","smartdns":"n","ddnsto":"y","vlmcsd":"y","ttyd":"n","iperf3":"y"}'
       customization:
         description: 'String JSON list of Customization'
         required: true
@@ -183,6 +183,7 @@ jobs:
           echo "vlmcsd=${{fromJson(inputs.plugins).vlmcsd}}" >> $GITHUB_ENV
           echo "ttyd=${{fromJson(inputs.plugins).ttyd}}" >> $GITHUB_ENV
           echo "iperf3=${{fromJson(inputs.plugins).iperf3}}" >> $GITHUB_ENV
+          echo "ddnsto=${{fromJson(github.event.inputs.plugins).ddnsto}}" >> $GITHUB_ENV
       - name: Compile the nano version
         if: ${{ github.event.inputs.nanoversion == 'true' }}
         run: |
@@ -216,6 +217,7 @@ jobs:
           echo "CONFIG_FIRMWARE_INCLUDE_VLMCSD=${{env.vlmcsd}}" >> .config
           echo "CONFIG_FIRMWARE_INCLUDE_TTYD=${{env.ttyd}}" >> .config
           echo "CONFIG_FIRMWARE_INCLUDE_IPERF3=${{env.iperf3}}" >> .config
+          echo "CONFIG_FIRMWARE_INCLUDE_DDNSTO=${{env.ddnsto}}" >> .config #ddnsto
           # cpufreq
           if ${{ github.event.inputs.cpufreq == 'true' }}; then
             echo "CONFIG_FIRMWARE_INCLUDE_OC=y" >> .config
