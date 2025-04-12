@@ -207,16 +207,16 @@ jobs:
           fi
           cp -f configs/templates/${{ matrix.target }}.config .config
           # include plugin
-          echo "CONFIG_FIRMWARE_INCLUDE_ADBYBY=${{env.adbyby}}" >> .config
-          echo "CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS=${{env.ss}}" >> .config
-          echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=${{env.v2ray}}" >> .config
-          echo "CONFIG_FIRMWARE_INCLUDE_XRAY=${{env.xray}}" >> .config
-          echo "CONFIG_FIRMWARE_INCLUDE_TROJAN=${{env.trojan}}" >> .config
-          echo "CONFIG_FIRMWARE_INCLUDE_SSOBFS=${{env.ssobfs}}" >> .config
-          echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=${{env.smartdns}}" >> .config
-          echo "CONFIG_FIRMWARE_INCLUDE_VLMCSD=${{env.vlmcsd}}" >> .config
-          echo "CONFIG_FIRMWARE_INCLUDE_TTYD=${{env.ttyd}}" >> .config
-          echo "CONFIG_FIRMWARE_INCLUDE_IPERF3=${{env.iperf3}}" >> .config
+          echo "CONFIG_FIRMWARE_INCLUDE_ADBYBY=y${{env.adbyby}}" >> .config
+          echo "CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS=n${{env.ss}}" >> .config
+          echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=n${{env.v2ray}}" >> .config
+          echo "CONFIG_FIRMWARE_INCLUDE_XRAY=n${{env.xray}}" >> .config
+          echo "CONFIG_FIRMWARE_INCLUDE_TROJAN=n${{env.trojan}}" >> .config
+          echo "CONFIG_FIRMWARE_INCLUDE_SSOBFS=n${{env.ssobfs}}" >> .config
+          echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=n${{env.smartdns}}" >> .config
+          echo "CONFIG_FIRMWARE_INCLUDE_VLMCSD=n${{env.vlmcsd}}" >> .config
+          echo "CONFIG_FIRMWARE_INCLUDE_TTYD=n${{env.ttyd}}" >> .config
+          echo "CONFIG_FIRMWARE_INCLUDE_IPERF3=n${{env.iperf3}}" >> .config
           # cpufreq
           if ${{ github.event.inputs.cpufreq == 'true' }}; then
             echo "CONFIG_FIRMWARE_INCLUDE_OC=y" >> .config
