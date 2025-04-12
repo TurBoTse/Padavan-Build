@@ -66,7 +66,7 @@ on:
         - ZTE-E8820S
         - ZTE-E8820V2
         - ZTT-RX6000
-        default: K2P
+        default: RM2100
       toolchain:
         description: 'Select the compilation toolchain'
         required: true
