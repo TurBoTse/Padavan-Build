@@ -103,7 +103,7 @@ on:
         description: 'String JSON list of plug-ins'
         required: true
         type: string
-        default: '{"adbyby":"y","ss":"n","v2ray":"n","xray":"n","trojan":"n","ssobfs":"n","smartdns":"n","vlmcsd":"n","ttyd":"n","iperf3":"n"}'
+        default: '{"adbyby":"y","ss":"yyy","v2ray":"n","xray":"y","trojan":"n","ssobfs":"y","smartdns":"n","vlmcsd":"n","ttyd":"n","iperf3":"n","naiveproxy":"y","singbox":"y"}'
       customization:
         description: 'String JSON list of Customization'
         required: true
@@ -208,15 +208,17 @@ jobs:
           cp -f configs/templates/${{ matrix.target }}.config .config
           # include plugin
           echo "CONFIG_FIRMWARE_INCLUDE_ADBYBY=y${{env.adbyby}}" >> .config
-          echo "CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS=n${{env.ss}}" >> .config
+          echo "CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS=y${{env.ss}}" >> .config
           echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=n${{env.v2ray}}" >> .config
-          echo "CONFIG_FIRMWARE_INCLUDE_XRAY=n${{env.xray}}" >> .config
+          echo "CONFIG_FIRMWARE_INCLUDE_XRAY=y${{env.xray}}" >> .config
           echo "CONFIG_FIRMWARE_INCLUDE_TROJAN=n${{env.trojan}}" >> .config
-          echo "CONFIG_FIRMWARE_INCLUDE_SSOBFS=n${{env.ssobfs}}" >> .config
+          echo "CONFIG_FIRMWARE_INCLUDE_SSOBFS=y${{env.ssobfs}}" >> .config
           echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=n${{env.smartdns}}" >> .config
           echo "CONFIG_FIRMWARE_INCLUDE_VLMCSD=n${{env.vlmcsd}}" >> .config
           echo "CONFIG_FIRMWARE_INCLUDE_TTYD=n${{env.ttyd}}" >> .config
           echo "CONFIG_FIRMWARE_INCLUDE_IPERF3=n${{env.iperf3}}" >> .config
+          echo "CONFIG_FIRMWARE_INCLUDE_NAIVEPROXY=y${{env.naiveproxy}}" >> .config
+          echo "CONFIG_FIRMWARE_INCLUDE_SINGBOX=y${{env.singbox}}" >> .config
           # cpufreq
           if ${{ github.event.inputs.cpufreq == 'true' }}; then
             echo "CONFIG_FIRMWARE_INCLUDE_OC=y" >> .config
