@@ -6,120 +6,121 @@ on:
   workflow_dispatch:
     inputs:
       target:
-        description: 'Select the router device'
+        description: 'Select the router device' # 選擇路由器設備型號
         required: true
         type: choice
         options:
-        - 360-T6M
-        - 360-T6M-PB
-        - B70
-        - BELL-A040WQ
-        - C-Life-XG1
-        - CR660x
-        - DIR-878
-        - DIR-882
-        - EA7500
-        - G-AX1800
-        - G-AX1800-B
-        - GHL
-        - HAR-20S2U1
-        - JCG-836PRO
-        - JCG-AC860M
-        - JCG-Q10Pro
-        - JCG-Q10Pro-PB
-        - JCG-Q11Pro
-        - JCG-Q20
-        - JCG-Q20-PB
-        - JCG-Y2
-        - JDCLOUD-RE-CP-02
-        - JDCLOUD-RE-SP-01B
-        - K2P
-        - K2P-NANO
-        - K2P-USB
-        - KOMI-A8
-        - MI-4
-        - MI-R3G
-        - MI-R3P-PB
-        - MI-R3P-SPI
-        - MI-R3P
-        - MI-R4A
-        - MR2600
-        - MSG1500
-        - MSG1500-Z
-        - NETGEAR-BZV
-        - NETGEAR-R6800
-        - NETGEAR-R7450
-        - NEWIFI
-        - NEWIFI3
-        - QM-B1
-        - R2100
-        - RM2100
-        - RT-AC85P
-        - SIM-AX1800T
-        - TX1801
-        - WDR8620
-        - WRL18M4GD
-        - WE410443-TC
-        - WIA3300-10
-        - WR1200JS
-        - XY-C1
-        - ZTE-E8820S
-        - ZTE-E8820V2
-        - ZTT-RX6000
-        default: K2P
+          - 360-T6M
+          - 360-T6M-PB
+          - B70
+          - BELL-A040WQ
+          - C-Life-XG1
+          - CR660x
+          - DIR-878
+          - DIR-882
+          - EA7500
+          - G-AX1800
+          - G-AX1800-B
+          - GHL
+          - HAR-20S2U1
+          - JCG-836PRO
+          - JCG-AC860M
+          - JCG-Q10Pro
+          - JCG-Q10Pro-PB
+          - JCG-Q11Pro
+          - JCG-Q20
+          - JCG-Q20-PB
+          - JCG-Y2
+          - JDCLOUD-RE-CP-02
+          - JDCLOUD-RE-SP-01B
+          - K2P
+          - K2P-NANO
+          - K2P-USB
+          - KOMI-A8
+          - MI-4
+          - MI-R3G
+          - MI-R3P-PB
+          - MI-R3P-SPI
+          - MI-R3P
+          - MI-R4A
+          - MR2600
+          - MSG1500
+          - MSG1500-Z
+          - NETGEAR-BZV
+          - NETGEAR-R6800
+          - NETGEAR-R7450
+          - NEWIFI
+          - NEWIFI3
+          - QM-B1
+          - R2100
+          - RM2100
+          - RT-AC85P
+          - SIM-AX1800T
+          - TX1801
+          - WDR8620
+          - WRL18M4GD
+          - WE410443-TC
+          - WIA3300-10
+          - WR1200JS
+          - XY-C1
+          - ZTE-E8820S
+          - ZTE-E8820V2
+          - ZTT-RX6000
+        default: RM2100
       toolchain:
-        description: 'Select the compilation toolchain'
+        description: 'Select the compilation toolchain' # 選擇編譯工具鏈
         required: true
         type: choice
         options:
-        - mipsel-linux-musl
-        - mipsel-linux-uclibc
+          - mipsel-linux-musl
+          - mipsel-linux-uclibc
         default: mipsel-linux-musl
       toolchaingcc:
-        description: 'Select the toolchain gcc version'
+        description: 'Select the toolchain gcc version' # 選擇工具鏈的 GCC 版本
         required: true
         type: choice
         options:
-        - mipsel-linux-musl
-        - mipsel-linux-musl-gcc7
-        - mipsel-linux-musl-gcc10
-        - mipsel-linux-uclibc
-        - mipsel-linux-uclibc-gcc7
-        - mipsel-linux-uclibc-gcc10
+          - mipsel-linux-musl
+          - mipsel-linux-musl-gcc7
+          - mipsel-linux-musl-gcc10
+          - mipsel-linux-uclibc
+          - mipsel-linux-uclibc-gcc7
+          - mipsel-linux-uclibc-gcc10
         default: mipsel-linux-musl
       cpufreq:
-        description: 'CPU Frequency (MHz)'
+        description: 'Enable CPU Overclock (if supported)' # 啟用 CPU 超頻 (如果支援)
         type: boolean
-        default: false
+        default: true
       mt7621_oc:
-        description: '1000Mhz=0x312 1100Mhz=0x362 1120Mhz=0x372 1200Mhz=0x3B2'
+        description: 'MT7621 CPU Frequency (MHz)' # MT7621 CPU 頻率 (MHz)
         type: choice
         options:
-        - '0x312'
-        - '0x362'
-        - '0x372'
-        - '0x3B2'
+          - '0x312' # 1000MHz
+          - '0x362' # 1100MHz
+          - '0x372' # 1120MHz
+          - '0x3B2' # 1200MHz
+        default: '0x3B2'
       plugins:
-        description: 'String JSON list of plug-ins'
+        description: 'String JSON list of plug-ins (y/n)' # 插件的 JSON 字串列表 (y/n)
         required: true
         type: string
-        default: '{"ss":"y","v2ray":"n","xray":"y","trojan":"y","ssobfs":"y","smartdns":"y","vlmcsd":"y","ttyd":"n","iperf3":"n"}'
+        default: '{"ss":"n","v2ray":"n","xray":"n","trojan":"n","ssobfs":"n","smartdns":"n","vlmcsd":"n","ttyd":"n","iperf3":"n","adbyby":"y"}' # 預設只啟用 adbyby
       customization:
-        description: 'String JSON list of Customization'
+        description: 'String JSON list of Customization' # 自訂設定的 JSON 字串列表
         required: true
         type: string
-        default: '{"lanip":"192.168.2.1","signaccount":"admin","signpassword":"admin","wifi2gssid":"Padavan","wifi2gpsk":"1234567890","wifi5gssid":"Padavan-5G","wifi5gpsk":"1234567890"}'
+        default: '{"lanip":"10.10.10.10","signaccount":"yuthegreat","signpassword":"yuchao926","wifi2gssid":"MT7603E","wifi2gpsk":"8613792086610","wifi5gssid":"MT7615E","wifi5gpsk":"00412937"}'
       nanoversion:
         type: boolean
-        description: 'Compile the nano version'
+        description: 'Compile the nano version (smaller size, fewer features)' # 編譯 nano 版本 (更小尺寸，更少功能)
         default: false
       oldreleases:
         type: boolean
-        description: 'Delete old releases'
+        description: 'Delete old releases' # 刪除舊的 Releases
         default: true
       oldworkflow:
         type: boolean
-        description: 'Delete old workflow runs'
+        description: 'Delete old workflow runs' # 刪除舊的 Workflow 運行記錄
         default: true
 env:
   FIRMWARE_AUTHOR: TurBoTse
@@ -142,119 +143,96 @@ jobs:
             toolchain: ${{ inputs.toolchain }}
             toolchaingcc: ${{ inputs.toolchaingcc }}
     steps:
-      - uses: actions/checkout@main
-      - uses: hendrikmuhs/ccache-action@main
+      - uses: actions/checkout@main # 檢出 Git 倉庫的程式碼
+      - uses: hendrikmuhs/ccache-action@main # 使用 ccache 加速編譯
         with:
-          key: ${{ matrix.target }}-${{ matrix.toolchaingcc }}
-      - uses: actions/setup-go@main
+          key: <span class="math-inline">\{\{ matrix\.target \}\}\-</span>{{ matrix.toolchaingcc }} # ccache 的快取鍵
+      - uses: actions/setup-go@main # 設定 Go 語言環境
         with:
           go-version: '1.23.5'
           check-latest: true
           cache: false
-      - name: Prepare environment
+      - name: Prepare environment # 準備編譯環境
         run: |
           sudo apt-get update && sudo apt-get install -y unzip libtool-bin ccache curl cmake gperf gawk flex bison nano xxd \
             fakeroot kmod cpio bc zip git python3-docutils gettext automake autopoint \
             texinfo build-essential help2man pkg-config zlib1g-dev libgmp3-dev \
             libmpc-dev libmpfr-dev libncurses5-dev libltdl-dev wget libc-dev-bin liblzma-dev
-          echo "TRUNK_DIR=${{ github.workspace }}/$FIRMWARE_REPO/trunk" >> $GITHUB_ENV
-          echo "Compilation_time=$(TZ='Asia/Shanghai' date +%Y%m%d)" >> $GITHUB_ENV
-      - name: Download sources and toolchain
+          echo "TRUNK_DIR=${{ github.workspace }}/$FIRMWARE_REPO/trunk" >> <span class="math-inline">GITHUB\_ENV \# 設定原始碼根目錄環境變數
+echo "Compilation\_time\=</span>(TZ='Asia/Shanghai' date +%Y%m%d)" >> $GITHUB_ENV # 設定編譯時間環境變數
+      - name: Download sources and toolchain # 下載原始碼和工具鏈
         run: |
-          git clone -b $FIRMWARE_BRANCH --depth=1 $FIRMWARE_URL $FIRMWARE_REPO
-          mkdir -p $FIRMWARE_REPO/$TOOLCHAIN_ROOT
-          curl -fSsLo- $TOOLCHAIN_URL/${{ matrix.toolchaingcc }}.tar.xz | tar Jxv -C $FIRMWARE_REPO/$TOOLCHAIN_ROOT
-      - name: Parse the string JSON list
-        run: |
-          echo "lanip=${{fromJson(inputs.customization).lanip}}" >> $GITHUB_ENV
-          echo "signaccount=${{fromJson(inputs.customization).signaccount}}" >> $GITHUB_ENV
-          echo "signpassword=${{fromJson(inputs.customization).signpassword}}" >> $GITHUB_ENV
-          echo "wifi2gssid=${{fromJson(inputs.customization).wifi2gssid}}" >> $GITHUB_ENV
-          echo "wifi2gpsk=${{fromJson(inputs.customization).wifi2gpsk}}" >> $GITHUB_ENV
-          echo "wifi5gssid=${{fromJson(inputs.customization).wifi5gssid}}" >> $GITHUB_ENV
-          echo "wifi5gpsk=${{fromJson(inputs.customization).wifi5gpsk}}" >> $GITHUB_ENV
-          # plugins
-          echo "ss=${{fromJson(inputs.plugins).ss}}" >> $GITHUB_ENV
-          echo "v2ray=${{fromJson(inputs.plugins).v2ray}}" >> $GITHUB_ENV
-          echo "xray=${{fromJson(inputs.plugins).xray}}" >> $GITHUB_ENV
-          echo "trojan=${{fromJson(inputs.plugins).trojan}}" >> $GITHUB_ENV
-          echo "ssobfs=${{fromJson(inputs.plugins).ssobfs}}" >> $GITHUB_ENV
-          echo "smartdns=${{fromJson(inputs.plugins).smartdns}}" >> $GITHUB_ENV
-          echo "vlmcsd=${{fromJson(inputs.plugins).vlmcsd}}" >> $GITHUB_ENV
-          echo "ttyd=${{fromJson(inputs.plugins).ttyd}}" >> $GITHUB_ENV
-          echo "iperf3=${{fromJson(inputs.plugins).iperf3}}" >> $GITHUB_ENV
-      - name: Compile the nano version
-        if: ${{ github.event.inputs.nanoversion == 'true' }}
+          git clone -b $FIRMWARE_BRANCH --depth=1 $FIRMWARE_URL $FIRMWARE_REPO # 克隆 Padavan 原始碼
+          mkdir -p $FIRMWARE_REPO/$TOOLCHAIN_ROOT # 建立工具鏈目錄
+          curl -fSsLo- <span class="math-inline">TOOLCHAIN\_URL/</span>{{ matrix.toolchaingcc }}.tar.xz | tar Jxv -C $FIRMWARE_REPO/<span class="math-inline">TOOLCHAIN\_ROOT \# 下載並解壓縮工具鏈
+\- name\: Parse the string JSON list \# 解析 JSON 字串
+run\: \|
+echo "lanip\=</span>{{fromJson(inputs.customization).lanip}}" >> <span class="math-inline">GITHUB\_ENV \# 設定 LAN IP 環境變數
+echo "signaccount\=</span>{{fromJson(inputs.customization).signaccount}}" >> <span class="math-inline">GITHUB\_ENV \# 設定登入帳號環境變數
+echo "signpassword\=</span>{{fromJson(inputs.customization).signpassword}}" >> <span class="math-inline">GITHUB\_ENV \# 設定登入密碼環境變數
+echo "wifi2gssid\=</span>{{fromJson(inputs.customization).wifi2gssid}}" >> <span class="math-inline">GITHUB\_ENV \# 設定 2\.4G WiFi SSID 環境變數
+echo "wifi2gpsk\=</span>{{fromJson(inputs.customization).wifi2gpsk}}" >> <span class="math-inline">GITHUB\_ENV \# 設定 2\.4G WiFi 密碼環境變數
+echo "wifi5gssid\=</span>{{fromJson(inputs.customization).wifi5gssid}}" >> <span class="math-inline">GITHUB\_ENV \# 設定 5G WiFi SSID 環境變數
+echo "wifi5gpsk\=</span>{{fromJson(inputs.customization).wifi5gpsk}}" >> <span class="math-inline">GITHUB\_ENV \# 設定 5G WiFi 密碼環境變數
+\# plugins
+echo "ss\=</span>{{fromJson(inputs.plugins).ss}}" >> <span class="math-inline">GITHUB\_ENV \# 設定 Shadowsocks 插件環境變數
+echo "v2ray\=</span>{{fromJson(inputs.plugins).v2ray}}" >> <span class="math-inline">GITHUB\_ENV \# 設定 V2Ray 插件環境變數
+echo "xray\=</span>{{fromJson(inputs.plugins).xray}}" >> <span class="math-inline">GITHUB\_ENV \# 設定 Xray 插件環境變數
+echo "trojan\=</span>{{fromJson(inputs.plugins).trojan}}" >> <span class="math-inline">GITHUB\_ENV \# 設定 Trojan 插件環境變數
+echo "ssobfs\=</span>{{fromJson(inputs.plugins).ssobfs}}" >> <span class="math-inline">GITHUB\_ENV \# 設定 ssobfs 插件環境變數
+echo "smartdns\=</span>{{fromJson(inputs.plugins).smartdns}}" >> <span class="math-inline">GITHUB\_ENV \# 設定 SmartDNS 插件環境變數
+echo "vlmcsd\=</span>{{fromJson(inputs.plugins).vlmcsd}}" >> <span class="math-inline">GITHUB\_ENV \# 設定 vlmcsd 插件環境變數
+echo "ttyd\=</span>{{fromJson(inputs.plugins).ttyd}}" >> <span class="math-inline">GITHUB\_ENV \# 設定 ttyd 插件環境變數
+echo "iperf3\=</span>{{fromJson(inputs.plugins).iperf3}}" >> <span class="math-inline">GITHUB\_ENV \# 設定 iperf3 插件環境變數
+echo "adbyby\=</span>{{fromJson(inputs.plugins).adbyby}}" >> $GITHUB_ENV # 設定 Adbyby 插件環境變數
+      - name: Compile the nano version # 編譯 nano 版本
+        if: ${{ github.event.inputs.nanoversion == 'true' }} # 如果選擇編譯 nano 版本
         run: |
           cd ${{ env.TRUNK_DIR }}/configs/templates
-          for M in ${{ matrix.target }}; do if [ -f $M.config ]; then
-            for MOD in ANTFS FAT EXFAT EXT2 EXT3 EXT4 XFS FUSE SWAP; do
-              sed -i "s/CONFIG_FIRMWARE_ENABLE_${MOD}=y/CONFIG_FIRMWARE_ENABLE_${MOD}=n/" $M.config; done
-            for MOD in UVC HID SERIAL AUDIO XFRM QOS IMQ IFB NFSD NFSC CIFS NTFS_3G LPRD U2EC TCPDUMP HDPARM PARTED SMBD WINS SMBD_SYSLOG FTPD RPL2TP EAP_PEAP HTTPS SFTP DROPBEAR_FAST_CODE OPENSSH OPENVPN SSWAN OPENSSL_EC OPENSSL_EXE XUPNPD MINIDLNA FIREFLY FFMPEG_NEW TRANSMISSION TRANSMISSION_WEB_CONTROL ARIA ARIA_WEB_CONTROL CURL SCUTCLIENT GDUT_DRCOM DOGCOM MINIEAP NJIT_CLIENT SOFTETHERVPN_SERVER SOFTETHERVPN_CLIENT SOFTETHERVPN_CMD VLMCSD TTYD LITE LRZSZ HTOP NANO IPERF3 DUMP1090 RTL_SDR MTR SOCAT SRELAY MENTOHUST FRPC FRPS REDSOCKS SHADOWSOCKS XRAY V2RAY TROJAN SSOBFS SINGBOX NAIVEPROXY ADBYBY DNSFORWARDER SMARTDNS ADGUARDHOME ZEROTIER ALIDDNS DDNSTO ALDRIVER SQM WIREGUARD; do
-              sed -i "s/CONFIG_FIRMWARE_INCLUDE_${MOD}=y/CONFIG_FIRMWARE_INCLUDE_${MOD}=n/" $M.config; done
+          for M in ${{ matrix.target }}; do if [ -f <span class="math-inline">M\.config \]; then
+for MOD in ANTFS <2\>FAT EXFAT EXT2 EXT3 EXT4 XFS FUSE SWAP; do
+sed \-i "s/CONFIG\_FIRMWARE\_ENABLE\_</span>{MOD}=y/CONFIG_FIRMWARE_ENABLE_${MOD}=n/" $M.config; done # 禁用檔案系統支援
+            # 注意：這裡需要確保 Adbyby 的配置沒有被強制禁用
+            # 檢查原始碼中 Adbyby 的配置名稱，並確保它不在下面的禁用列表中
+            for MOD in UVC HID SERIAL AUDIO XFRM QOS IMQ IFB NFSD NFSC CIFS NTFS_3G LPRD U2EC TCPDUMP HDPARM PARTED SMBD WINS SMBD_SYSLOG FTPD RPL2TP EAP_PEAP HTTPS SFTP DROPBEAR_FAST_CODE OPENSSH OPENVPN SSWAN OPENSSL_EC OPENSSL_EXE XUPNPD MINIDLNA FIREFLY FFMPEG_NEW TRANSMISSION TRANSMISSION_WEB_CONTROL ARIA ARIA_WEB_CONTROL CURL SCUTCLIENT GDUT_DRCOM DOGCOM MINIEAP NJIT_CLIENT SOFTETHERVPN_SERVER SOFTETHERVPN_CLIENT SOFTETHERVPN_CMD VLMCSD TTYD LITE LRZSZ HTOP NANO IPERF3 DUMP1090 RTL_SDR MTR SOCAT SRELAY MENTOHUST FRPC FRPS REDSOCKS SHADOWSOCKS XRAY V2RAY TROJAN SSOBFS SINGBOX NAIVEPROXY DNSFORWARDER SMARTDNS ADGUARDHOME ZEROTIER ALIDDNS DDNSTO ALDRIVER SQM WIREGUARD; do
+              if [ "<span class="math-inline">MOD" \!\= "ADBYBY" \]; then \# 排除 ADBYBY
+sed \-i "s/CONFIG\_FIRMWARE\_INCLUDE\_</span>{MOD}=y/CONFIG_FIRMWARE_INCLUDE_${MOD}=n/" $M.config;
+              fi
+            done
           fi; done
-      - name: Modify and customize
+      - name: Modify and customize # 修改和自訂設定
         run: |
-          sed -i '/cp -f/d' $FIRMWARE_REPO/Makefile
-          # if [ -d custom/trunk ]; then cp -rf custom/trunk/* ${{ env.TRUNK_DIR }}/; fi
-          sh custom/scripts/setip.sh '${{ env.lanip }}' '${{ env.TRUNK_DIR }}/user/shared/src/defaults.h' '${{ env.TRUNK_DIR }}/user/www/dict/CN.dict'
-          sh custom/scripts/setaccount.sh '${{ env.signaccount }}' '${{ env.signpassword }}' '${{ env.TRUNK_DIR }}/user/shared/src/defaults.h'
-          sh custom/scripts/setwifi.sh '${{ env.wifi2gssid }}' '${{ env.wifi2gpsk }}' '${{ env.wifi5gssid }}' '${{ env.wifi5gpsk }}' '${{ env.TRUNK_DIR }}/user/shared/src/defaults.h'
-          cd ${{ env.TRUNK_DIR }}
-          if [ ! -f configs/templates/${{ matrix.target }}.config ]; then
-            echo "configs/templates/${{ matrix.target }}.config not found"
-          exit 0
-          fi
-          cp -f configs/templates/${{ matrix.target }}.config .config
+          sed -i '/cp -f/d' $FIRMWARE_REPO/Makefile # 移除 Makefile 中可能存在的複製命令
+          # if [ -d custom/trunk ]; then cp -rf custom/trunk/* <span class="math-inline">\{\{ env\.TRUNK\_DIR \}\}/; fi \# 如果存在自訂目錄，則複製其內容 \(目前註解\)
+sh custom/scripts/setip\.sh '</span>{{ env.lanip }}' '<span class="math-inline">\{\{ env\.TRUNK\_DIR \}\}/user/shared/src/defaults\.h' '</span>{{ env.TRUNK_DIR }}/user/www/dict/CN.dict' # 設定 LAN IP
+          sh custom/scripts/setaccount.sh '<span class="math-inline">\{\{ env\.signaccount \}\}' '</span>{{ env.signpassword }}' '<span class="math-inline">\{\{ env\.TRUNK\_DIR \}\}/user/shared/src/defaults\.h' \# 設定登入帳號和密碼
+sh custom/scripts/setwifi\.sh '</span>{{ env.wifi2gssid }}' '<span class="math-inline">\{\{ env\.wifi2gpsk \}\}' '</span>{{ env.wifi5gssid }}' '<span class="math-inline">\{\{ env\.wifi5gpsk \}\}' '</span>{{ env.TRUNK_DIR }}/user/shared/src/defaults.h' # 設定 WiFi SSID 和密碼
+          cd <span class="math-inline">\{\{ env\.TRUNK\_DIR \}\}
+if \[ \! \-f configs/templates/</span>{{ matrix.target }}.config ]; then
+            echo "configs/templates/<span class="math-inline">\{\{ matrix\.target \}\}\.config not found"
+exit 0
+fi
+cp \-f configs/templates/</span>{{ matrix.target }}.config .config # 複製目標設備的預設配置
           # include plugin
-          echo "CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS=${{env.ss}}" >> .config
-          echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=${{env.v2ray}}" >> .config
-          echo "CONFIG_FIRMWARE_INCLUDE_XRAY=${{env.xray}}" >> .config
-          echo "CONFIG_FIRMWARE_INCLUDE_TROJAN=${{env.trojan}}" >> .config
-          echo "CONFIG_FIRMWARE_INCLUDE_SSOBFS=${{env.ssobfs}}" >> .config
-          echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=${{env.smartdns}}" >> .config
-          echo "CONFIG_FIRMWARE_INCLUDE_VLMCSD=${{env.vlmcsd}}" >> .config
-          echo "CONFIG_FIRMWARE_INCLUDE_TTYD=${{env.ttyd}}" >> .config
-          echo "CONFIG_FIRMWARE_INCLUDE_IPERF3=${{env.iperf3}}" >> .config
+          echo "CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS=<span class="math-inline">\{\{env\.ss\}\}" \>\> \.config \# 設定 Shadowsocks 插件
+echo "CONFIG\_FIRMWARE\_INCLUDE\_V2RAY\=</span>{{env.v2ray}}" >> .config # 設定 V2Ray 插件
+          echo "CONFIG_FIRMWARE_INCLUDE_XRAY=<span class="math-inline">\{\{env\.xray\}\}" \>\> \.config \# 設定 Xray 插件
+echo "CONFIG\_FIRMWARE\_INCLUDE\_TROJAN\=</span>{{env.trojan}}" >> .config # 設定 Trojan 插件
+          echo "CONFIG_FIRMWARE_INCLUDE_SSOBFS=<span class="math-inline">\{\{env\.ssobfs\}\}" \>\> \.config \# 設定 ssobfs 插件
+echo "CONFIG\_FIRMWARE\_INCLUDE\_SMARTDNS\=</span>{{env.smartdns}}" >> .config # 設定 SmartDNS 插件
+          echo "CONFIG_FIRMWARE_INCLUDE_VLMCSD=<span class="math-inline">\{\{env\.vlmcsd\}\}" \>\> \.config \# 設定 vlmcsd 插件
+echo "CONFIG\_FIRMWARE\_INCLUDE\_TTYD\=</span>{{env.ttyd}}" >> .config # 設定 ttyd 插件
+          echo "CONFIG_FIRMWARE_INCLUDE_IPERF3=<span class="math-inline">\{\{env\.iperf3\}\}" \>\> \.config \# 設定 iperf3 插件
+echo "CONFIG\_FIRMWARE\_INCLUDE\_ADBYBY\=</span>{{env.adbyby}}" >> .config # 確保啟用 Adbyby
           # cpufreq
-          if ${{ github.event.inputs.cpufreq == 'true' }}; then
-            echo "CONFIG_FIRMWARE_INCLUDE_OC=y" >> .config
-            echo "CONFIG_FIRMWARE_MT7621_OC=${{ inputs.mt7621_oc }}" >> .config
+          if <span class="math-inline">\{\{ github\.event\.inputs\.cpufreq \=\= 'true' \}\}; then \# 如果啟用超頻
+echo "CONFIG\_FIRMWARE\_INCLUDE\_OC\=y" \>\> \.config \# 啟用超頻選項
+echo "CONFIG\_FIRMWARE\_MT7621\_OC\=</span>{{ inputs.mt7621_oc }}" >> .config # 設定超頻頻率
           fi
-      - name: Start build firmware
+      - name: Start build firmware # 開始編譯韌體
         run: |
           cd $FIRMWARE_REPO
-          make ${{ matrix.target }} TOOLCHAIN=${{ matrix.toolchain }}
+          make <span class="math-inline">\{\{ matrix\.target \}\} TOOLCHAIN\=</span>{{ matrix.toolchain }} # 執行編譯命令
           nano=""
           if ${{ github.event.inputs.nanoversion == 'true' }}; then
-            nano="-nano"
-          fi
-          cpufreq=""
-          if ${{ github.event.inputs.cpufreq == 'true' }}; then
-            cpufreq="-cpufreq-${{ inputs.mt7621_oc }}"
-          fi
-          mkdir -p ${{ env.TRUNK_DIR }}/firmwares/
-          sudo mv ${{ env.TRUNK_DIR }}/images/*.trx ${{ env.TRUNK_DIR }}/firmwares/$FIRMWARE_AUTHOR-${{ matrix.target }}-4.4-${{ matrix.toolchaingcc }}${nano}${cpufreq}-${{ env.Compilation_time }}.trx
-      - uses: actions/upload-artifact@main
-        with:
-          name: ${{ matrix.target }}-${{ matrix.toolchaingcc }}
-          path: ${{ env.TRUNK_DIR }}/firmwares/*.trx
-      - uses: ncipollo/release-action@main
-        with:
-          commit: main
-          tag: ${{ env.Compilation_time }}
-          artifacts: ${{ env.TRUNK_DIR }}/firmwares/*.trx
-          allowUpdates: true
-          omitBodyDuringUpdate: true
-      - uses: dev-drprasad/delete-older-releases@master
-        if: ${{ github.event.inputs.oldreleases == 'true' }}
-        with:
-          keep_latest: 1
-          delete_tags: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: Mattraks/delete-workflow-runs@main
-        if: ${{ github.event.inputs.oldworkflow == 'true' }}
-        with:
-          retain_days: 0
-          keep_minimum_runs: 1
+            nano="-
