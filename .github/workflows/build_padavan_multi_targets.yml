@@ -30,7 +30,7 @@ on:
         description: 'Plugin JSON, e.g. {"ss":"y","xray":"n"}'
         required: true
         type: string
-        default: '{"ss":"y","v2ray":"n","xray":"y","trojan":"n","ssobfs":"y","smartdns":"y","vlmcsd":"y","ttyd":"n","iperf3":"n"}'
+        default: '{"shadowsocks":"y","v2ray":"n","xray":"y","trojan":"n","ssobfs":"y","smartdns":"y","vlmcsd":"y","ttyd":"n","iperf3":"n"}'
       customization:
         description: 'Customization JSON'
         required: true
